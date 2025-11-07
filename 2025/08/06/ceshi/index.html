@@ -19,21 +19,21 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="歌单    .yueji-player {   background: rgba(255, 255, 255, 0.95);   border-radius: 12px;   padding: 20px;   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);   border: 1px solid rgba(0, 0, 0, 0.06);   font-fam">
+    <meta name="description" content=".yueji-player {   background: rgba(255, 255, 255, 0.95);   border-radius: 12px;   padding: 20px;   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);   border: 1px solid rgba(0, 0, 0, 0.06);   font-family">
 <meta property="og:type" content="article">
-<meta property="og:title" content="想把我唱给你听">
+<meta property="og:title" content="音乐测试">
 <meta property="og:url" content="https://liudungenn.github.io/2025/08/06/ceshi/index.html">
 <meta property="og:site_name" content="刘钝根">
-<meta property="og:description" content="歌单    .yueji-player {   background: rgba(255, 255, 255, 0.95);   border-radius: 12px;   padding: 20px;   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);   border: 1px solid rgba(0, 0, 0, 0.06);   font-fam">
+<meta property="og:description" content=".yueji-player {   background: rgba(255, 255, 255, 0.95);   border-radius: 12px;   padding: 20px;   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);   border: 1px solid rgba(0, 0, 0, 0.06);   font-family">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-08-06T02:18:34.000Z">
-<meta property="article:modified_time" content="2025-11-07T08:11:04.319Z">
+<meta property="article:modified_time" content="2025-11-07T08:53:24.332Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>想把我唱给你听 - 刘钝根</title>
+  <title>音乐测试 - 刘钝根</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="想把我唱给你听"></span>
+            <span id="subtitle" data-typed-text="音乐测试"></span>
           
         </div>
 
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          764 字
+          913 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          7 分钟
+          8 分钟
         
       </span>
     
@@ -270,13 +270,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">想把我唱给你听</h1>
+            <h1 id="seo-header">音乐测试</h1>
             
             
               <div class="markdown-body">
                 
-                <p>歌单</p>
-
+                
 <div id="yueji-player" style="max-width: 400px; margin: 30px auto;">
 <style>
 .yueji-player {
@@ -296,14 +295,10 @@
   width: 60px;
   height: 60px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
   margin-right: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 20px;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 .yueji-info {
   flex: 1;
@@ -324,35 +319,34 @@
   margin-bottom: 15px;
 }
 .yueji-progress-bar {
-  height: 3px;
-  background: rgba(0, 0, 0, 0.1);
+  height: 4px;
+  background: #e0e0e0;
   border-radius: 2px;
   cursor: pointer;
   position: relative;
 }
 .yueji-progress-inner {
   height: 100%;
-  width: 35%;
+  width: 0%;
   background: linear-gradient(90deg, #667eea, #764ba2);
   border-radius: 2px;
   position: relative;
-  transition: width 0.2s ease;
+  transition: width 0.1s ease;
 }
-.yueji-progress-inner::after {
-  content: '';
+.yueji-progress-handle {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
+  background: #667eea;
   border-radius: 50%;
-  background: #fff;
-  right: -4px;
+  right: -6px;
   top: 50%;
   transform: translateY(-50%);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
-.yueji-progress-bar:hover .yueji-progress-inner::after {
+.yueji-progress-bar:hover .yueji-progress-handle {
   opacity: 1;
 }
 .yueji-time {
@@ -360,17 +354,18 @@
   justify-content: space-between;
   font-size: 11px;
   color: #999;
-  margin-top: 6px;
+  margin-top: 8px;
 }
 .yueji-controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 15px;
 }
 .yueji-main-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 15px;
 }
 .yueji-btn {
   background: none;
@@ -382,27 +377,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
 }
 .yueji-btn:hover {
   background: rgba(102, 126, 234, 0.1);
+  transform: scale(1.1);
 }
 .yueji-play-btn {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   background: #667eea;
   color: white;
   border-radius: 50%;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .yueji-play-btn:hover {
   background: #5a6fd8;
   transform: scale(1.05);
-}
-.yueji-icon {
-  font-size: 16px;
-}
-.yueji-play-icon {
-  font-size: 14px;
-  margin-left: 1px;
 }
 .yueji-volume {
   display: flex;
@@ -475,165 +470,222 @@
   color: #999;
   margin-left: 8px;
 }
+.audio-player {
+  display: none;
+}
 </style>
+
+<!-- 隐藏的音频播放器 -->
+<audio id="audioPlayer" class="audio-player"></audio>
 
 <div class="yueji-player">
   <div class="yueji-header">
-    <div class="yueji-cover">♪</div>
+    <div class="yueji-cover" id="songCover"></div>
     <div class="yueji-info">
-      <div class="yueji-title">想把我唱给你听</div>
-      <div class="yueji-artist">王筝 / 曹芳 / 小柯 / 老狼</div>
+      <div class="yueji-title" id="songTitle">唐宫夜宴</div>
+      <div class="yueji-artist" id="songArtist">河南博物院华夏古乐团</div>
     </div>
   </div>
   
   <div class="yueji-progress">
-    <div class="yueji-progress-bar" id="yuejiProgressBar">
-      <div class="yueji-progress-inner" id="yuejiProgress"></div>
+    <div class="yueji-progress-bar" id="progressBar">
+      <div class="yueji-progress-inner" id="progress">
+        <div class="yueji-progress-handle" id="progressHandle"></div>
+      </div>
     </div>
     <div class="yueji-time">
-      <span id="yuejiCurrentTime">1:45</span>
-      <span id="yuejiDuration">4:30</span>
+      <span id="currentTime">0:00</span>
+      <span id="duration">0:00</span>
     </div>
   </div>
   
   <div class="yueji-controls">
     <div class="yueji-main-controls">
-      <button class="yueji-btn" title="上一曲">
-        <span class="yueji-icon">⏮</span>
+      <button class="yueji-btn" title="上一曲" onclick="playPrevious()">
+        <span>⏮</span>
       </button>
-      <button class="yueji-btn yueji-play-btn" id="yuejiPlayBtn" title="播放">
-        <span class="yueji-play-icon">▶</span>
+      <button class="yueji-btn yueji-play-btn" id="playBtn" title="播放" onclick="togglePlay()">
+        <span>▶</span>
       </button>
-      <button class="yueji-btn" title="下一曲">
-        <span class="yueji-icon">⏭</span>
+      <button class="yueji-btn" title="下一曲" onclick="playNext()">
+        <span>⏭</span>
       </button>
     </div>
     
     <div class="yueji-volume">
       <span class="yueji-volume-icon">🔊</span>
-      <div class="yueji-volume-bar" id="yuejiVolumeBar">
-        <div class="yueji-volume-inner" id="yuejiVolumeInner"></div>
+      <div class="yueji-volume-bar" id="volumeBar">
+        <div class="yueji-volume-inner" id="volumeInner"></div>
       </div>
     </div>
   </div>
   
   <div class="yueji-playlist">
     <div class="yueji-playlist-title">播放列表</div>
-    <div class="yueji-playlist-item active">
+    <div class="yueji-playlist-item active" onclick="playSong(0)">
       <div class="yueji-playlist-index">1</div>
-      <div class="yueji-playlist-name">想把我唱给你听</div>
-      <div class="yueji-playlist-duration">4:30</div>
-    </div>
-    <div class="yueji-playlist-item">
-      <div class="yueji-playlist-index">2</div>
-      <div class="yueji-playlist-name">富士山下</div>
+      <div class="yueji-playlist-name">唐宫夜宴</div>
       <div class="yueji-playlist-duration">3:45</div>
     </div>
-    <div class="yueji-playlist-item">
+    <div class="yueji-playlist-item" onclick="playSong(1)">
+      <div class="yueji-playlist-index">2</div>
+      <div class="yueji-playlist-name">红豆曲</div>
+      <div class="yueji-playlist-duration">4:20</div>
+    </div>
+    <div class="yueji-playlist-item" onclick="playSong(2)">
       <div class="yueji-playlist-index">3</div>
-      <div class="yueji-playlist-name">夏天的风</div>
-      <div class="yueji-playlist-duration">3:20</div>
+      <div class="yueji-playlist-name">生命之河</div>
+      <div class="yueji-playlist-duration">3:30</div>
     </div>
   </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const playBtn = document.getElementById('yuejiPlayBtn');
-  const progress = document.getElementById('yuejiProgress');
-  const progressBar = document.getElementById('yuejiProgressBar');
-  const currentTimeEl = document.getElementById('yuejiCurrentTime');
-  const durationEl = document.getElementById('yuejiDuration');
-  const volumeBar = document.getElementById('yuejiVolumeBar');
-  const volumeInner = document.getElementById('yuejiVolumeInner');
-  const playlistItems = document.querySelectorAll('.yueji-playlist-item');
+// 歌曲数据
+const songs = [
+  {
+    id: '794339369',
+    name: '唐宫夜宴',
+    artist: '河南博物院华夏古乐团',
+    url: 'http://music.163.com/song/media/outer/url?id=794339369.mp3',
+    cover: 'https://img.cdn1.vip/i/690dae017d9cd_1762504193.webp',
+    duration: 225 // 3:45 in seconds
+  },
+  {
+    id: '2504108236',
+    name: '红豆曲',
+    artist: '叶茅',
+    url: 'http://music.163.com/song/media/outer/url?id=2504108236.mp3',
+    cover: 'https://img.cdn1.vip/i/690dae017d9cd_1762504193.webp',
+    duration: 260 // 4:20 in seconds
+  },
+  {
+    id: '2070694607',
+    name: '生命之河',
+    artist: '毛阿敏、咏梅',
+    url: 'http://music.163.com/song/media/outer/url?id=2070694607.mp3',
+    cover: 'https://img.cdn1.vip/i/690dae017d9cd_1762504193.webp',
+    duration: 210 // 3:30 in seconds
+  }
+];
+
+let currentSongIndex = 0;
+let isPlaying = false;
+let currentVolume = 0.7;
+
+const audioPlayer = document.getElementById('audioPlayer');
+const playBtn = document.getElementById('playBtn');
+const progress = document.getElementById('progress');
+const progressBar = document.getElementById('progressBar');
+const currentTimeEl = document.getElementById('currentTime');
+const durationEl = document.getElementById('duration');
+const volumeInner = document.getElementById('volumeInner');
+const volumeBar = document.getElementById('volumeBar');
+const songTitle = document.getElementById('songTitle');
+const songArtist = document.getElementById('songArtist');
+const songCover = document.getElementById('songCover');
+
+// 初始化
+audioPlayer.volume = currentVolume;
+volumeInner.style.width = `${currentVolume * 100}%`;
+loadSong(currentSongIndex);
+
+// 事件监听
+audioPlayer.addEventListener('timeupdate', updateProgress);
+audioPlayer.addEventListener('loadedmetadata', updateDuration);
+audioPlayer.addEventListener('ended', playNext);
+
+progressBar.addEventListener('click', seek);
+volumeBar.addEventListener('click', setVolume);
+
+// 函数定义
+function loadSong(index) {
+  const song = songs[index];
+  audioPlayer.src = song.url;
+  songTitle.textContent = song.name;
+  songArtist.textContent = song.artist;
+  songCover.style.backgroundImage = `url('${song.cover}')`;
   
-  let isPlaying = false;
-  let currentTime = 105;
-  let duration = 270;
-  let currentVolume = 0.7;
+  // 更新播放列表高亮
+  document.querySelectorAll('.yueji-playlist-item').forEach((item, i) => {
+    item.classList.toggle('active', i === index);
+  });
   
-  updateTimeDisplay();
+  updateDuration();
+}
+
+function togglePlay() {
+  if (isPlaying) {
+    audioPlayer.pause();
+    playBtn.innerHTML = '<span>▶</span>';
+    playBtn.title = '播放';
+  } else {
+    audioPlayer.play();
+    playBtn.innerHTML = '<span>⏸</span>';
+    playBtn.title = '暂停';
+  }
+  isPlaying = !isPlaying;
+}
+
+function playSong(index) {
+  if (currentSongIndex !== index) {
+    currentSongIndex = index;
+    loadSong(index);
+  }
+  if (!isPlaying) {
+    togglePlay();
+  }
+}
+
+function playPrevious() {
+  currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+  loadSong(currentSongIndex);
+  if (isPlaying) {
+    audioPlayer.play();
+  }
+}
+
+function playNext() {
+  currentSongIndex = (currentSongIndex + 1) % songs.length;
+  loadSong(currentSongIndex);
+  if (isPlaying) {
+    audioPlayer.play();
+  }
+}
+
+function updateProgress() {
+  const { currentTime, duration } = audioPlayer;
+  const progressPercent = (currentTime / duration) * 100;
+  progress.style.width = `${progressPercent}%`;
+  
+  currentTimeEl.textContent = formatTime(currentTime);
+}
+
+function updateDuration() {
+  const song = songs[currentSongIndex];
+  durationEl.textContent = formatTime(song.duration);
+}
+
+function seek(e) {
+  const progressWidth = this.clientWidth;
+  const clickX = e.offsetX;
+  const duration = audioPlayer.duration;
+  audioPlayer.currentTime = (clickX / progressWidth) * duration;
+}
+
+function setVolume(e) {
+  const volumeWidth = this.clientWidth;
+  const clickX = e.offsetX;
+  currentVolume = clickX / volumeWidth;
+  audioPlayer.volume = currentVolume;
   volumeInner.style.width = `${currentVolume * 100}%`;
-  
-  playBtn.addEventListener('click', function() {
-    isPlaying = !isPlaying;
-    if (isPlaying) {
-      playBtn.innerHTML = '<span class="yueji-play-icon">⏸</span>';
-      playBtn.title = '暂停';
-      simulatePlayback();
-    } else {
-      playBtn.innerHTML = '<span class="yueji-play-icon">▶</span>';
-      playBtn.title = '播放';
-    }
-  });
-  
-  function simulatePlayback() {
-    if (!isPlaying) return;
-    
-    if (currentTime < duration) {
-      currentTime += 1;
-      updateProgress();
-      setTimeout(simulatePlayback, 1000);
-    } else {
-      isPlaying = false;
-      playBtn.innerHTML = '<span class="yueji-play-icon">▶</span>';
-      playBtn.title = '播放';
-      currentTime = 0;
-      updateProgress();
-    }
-  }
-  
-  function updateProgress() {
-    const progressPercent = (currentTime / duration) * 100;
-    progress.style.width = `${progressPercent}%`;
-    updateTimeDisplay();
-  }
-  
-  function updateTimeDisplay() {
-    const formatTime = (seconds) => {
-      const mins = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60);
-      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-    };
-    
-    currentTimeEl.textContent = formatTime(currentTime);
-    durationEl.textContent = formatTime(duration);
-  }
-  
-  progressBar.addEventListener('click', function(e) {
-    const progressWidth = this.clientWidth;
-    const clickedOffsetX = e.offsetX;
-    const progressPercent = (clickedOffsetX / progressWidth) * 100;
-    progress.style.width = `${progressPercent}%`;
-    currentTime = (progressPercent / 100) * duration;
-    updateTimeDisplay();
-  });
-  
-  volumeBar.addEventListener('click', function(e) {
-    const volumeWidth = this.clientWidth;
-    const clickedOffsetX = e.offsetX;
-    const volumePercent = (clickedOffsetX / volumeWidth);
-    currentVolume = Math.max(0, Math.min(1, volumePercent));
-    volumeInner.style.width = `${currentVolume * 100}%`;
-  });
-  
-  playlistItems.forEach(item => {
-    item.addEventListener('click', function() {
-      playlistItems.forEach(i => i.classList.remove('active'));
-      this.classList.add('active');
-      
-      const songName = this.querySelector('.yueji-playlist-name').textContent;
-      document.querySelector('.yueji-title').textContent = songName;
-      
-      isPlaying = false;
-      playBtn.innerHTML = '<span class="yueji-play-icon">▶</span>';
-      playBtn.title = '播放';
-      currentTime = 0;
-      updateProgress();
-    });
-  });
-});
+}
+
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+}
 </script>
 </div>
 
@@ -653,7 +705,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>想把我唱给你听</div>
+      <div>音乐测试</div>
       <div>https://liudungenn.github.io/2025/08/06/ceshi/</div>
     </div>
     <div class="license-meta">
