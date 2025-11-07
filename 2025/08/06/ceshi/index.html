@@ -273,26 +273,382 @@
             <h1 id="seo-header">想把我唱给你听</h1>
             
             
-              <div class="markdown-body">
-                
-                <p>歌单</p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=9066609719&auto=1&height=430"></iframe>
+             <div class="markdown-body">
+  <p>歌单</p>
+  
+  <!-- 仿月记样式音乐播放器 -->
+  <div id="yueji-player" style="max-width: 400px; margin: 30px auto;">
+    <style>
+      .yueji-player {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+      }
+      .yueji-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .yueji-cover {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+      .yueji-info {
+        flex: 1;
+      }
+      .yueji-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 4px;
+        line-height: 1.4;
+      }
+      .yueji-artist {
+        font-size: 13px;
+        color: #666;
+        opacity: 0.8;
+      }
+      .yueji-progress {
+        margin-bottom: 15px;
+      }
+      .yueji-progress-bar {
+        height: 3px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+        cursor: pointer;
+        position: relative;
+      }
+      .yueji-progress-inner {
+        height: 100%;
+        width: 35%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 2px;
+        position: relative;
+        transition: width 0.2s ease;
+      }
+      .yueji-progress-inner::after {
+        content: '';
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #fff;
+        right: -4px;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+      .yueji-progress-bar:hover .yueji-progress-inner::after {
+        opacity: 1;
+      }
+      .yueji-time {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: #999;
+        margin-top: 6px;
+      }
+      .yueji-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .yueji-main-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .yueji-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .yueji-btn:hover {
+        background: rgba(102, 126, 234, 0.1);
+      }
+      .yueji-play-btn {
+        width: 36px;
+        height: 36px;
+        background: #667eea;
+        color: white;
+        border-radius: 50%;
+      }
+      .yueji-play-btn:hover {
+        background: #5a6fd8;
+        transform: scale(1.05);
+      }
+      .yueji-icon {
+        font-size: 16px;
+      }
+      .yueji-play-icon {
+        font-size: 14px;
+        margin-left: 1px;
+      }
+      .yueji-volume {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .yueji-volume-icon {
+        font-size: 14px;
+        color: #666;
+      }
+      .yueji-volume-bar {
+        width: 60px;
+        height: 3px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+        cursor: pointer;
+        position: relative;
+      }
+      .yueji-volume-inner {
+        height: 100%;
+        width: 70%;
+        background: #667eea;
+        border-radius: 2px;
+      }
+      .yueji-playlist {
+        margin-top: 15px;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        padding-top: 15px;
+      }
+      .yueji-playlist-title {
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+      .yueji-playlist-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        margin-bottom: 4px;
+      }
+      .yueji-playlist-item:hover {
+        background: rgba(102, 126, 234, 0.05);
+      }
+      .yueji-playlist-item.active {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+      }
+      .yueji-playlist-index {
+        font-size: 12px;
+        color: #999;
+        width: 20px;
+        margin-right: 10px;
+      }
+      .yueji-playlist-item.active .yueji-playlist-index {
+        color: #667eea;
+      }
+      .yueji-playlist-name {
+        flex: 1;
+        font-size: 13px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .yueji-playlist-duration {
+        font-size: 11px;
+        color: #999;
+        margin-left: 8px;
+      }
+    </style>
 
-<p>想把我唱给你听</p>
-<iframe src="http://music.163.com/song/media/outer/url?id=1843110965.mp3" name="想把我唱给你听" scrolling="auto" width="100%" height="100%" style="border: none #b0b0b0;"></iframe>
+    <div class="yueji-player">
+      <div class="yueji-header">
+        <div class="yueji-cover">♪</div>
+        <div class="yueji-info">
+          <div class="yueji-title">想把我唱给你听</div>
+          <div class="yueji-artist">王筝 / 曹芳 / 小柯 / 老狼</div>
+        </div>
+      </div>
+      
+      <div class="yueji-progress">
+        <div class="yueji-progress-bar" id="yuejiProgressBar">
+          <div class="yueji-progress-inner" id="yuejiProgress"></div>
+        </div>
+        <div class="yueji-time">
+          <span id="yuejiCurrentTime">1:45</span>
+          <span id="yuejiDuration">4:30</span>
+        </div>
+      </div>
+      
+      <div class="yueji-controls">
+        <div class="yueji-main-controls">
+          <button class="yueji-btn" title="上一曲">
+            <span class="yueji-icon">⏮</span>
+          </button>
+          <button class="yueji-btn yueji-play-btn" id="yuejiPlayBtn" title="播放">
+            <span class="yueji-play-icon">▶</span>
+          </button>
+          <button class="yueji-btn" title="下一曲">
+            <span class="yueji-icon">⏭</span>
+          </button>
+        </div>
+        
+        <div class="yueji-volume">
+          <span class="yueji-volume-icon">🔊</span>
+          <div class="yueji-volume-bar" id="yuejiVolumeBar">
+            <div class="yueji-volume-inner" id="yuejiVolumeInner"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="yueji-playlist">
+        <div class="yueji-playlist-title">播放列表</div>
+        <div class="yueji-playlist-item active">
+          <div class="yueji-playlist-index">1</div>
+          <div class="yueji-playlist-name">想把我唱给你听</div>
+          <div class="yueji-playlist-duration">4:30</div>
+        </div>
+        <div class="yueji-playlist-item">
+          <div class="yueji-playlist-index">2</div>
+          <div class="yueji-playlist-name">富士山下</div>
+          <div class="yueji-playlist-duration">3:45</div>
+        </div>
+        <div class="yueji-playlist-item">
+          <div class="yueji-playlist-index">3</div>
+          <div class="yueji-playlist-name">夏天的风</div>
+          <div class="yueji-playlist-duration">3:20</div>
+        </div>
+      </div>
+    </div>
 
-<p>富士山下</p>
-<iframe src="http://music.163.com/song/media/outer/url?id=2599695445.mp3" name="富士山下" scrolling="auto" width="100%" height="100%" style="border: none #b0b0b0;"></iframe>
-
-<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=788946049&bvid=BV1cC4y1f7qz&cid=1281423922&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-                
-              </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const playBtn = document.getElementById('yuejiPlayBtn');
+        const progress = document.getElementById('yuejiProgress');
+        const progressBar = document.getElementById('yuejiProgressBar');
+        const currentTimeEl = document.getElementById('yuejiCurrentTime');
+        const durationEl = document.getElementById('yuejiDuration');
+        const volumeBar = document.getElementById('yuejiVolumeBar');
+        const volumeInner = document.getElementById('yuejiVolumeInner');
+        const playlistItems = document.querySelectorAll('.yueji-playlist-item');
+        
+        let isPlaying = false;
+        let currentTime = 105; // 1:45 in seconds
+        let duration = 270; // 4:30 in seconds
+        let currentVolume = 0.7;
+        
+        // 初始化
+        updateTimeDisplay();
+        volumeInner.style.width = `${currentVolume * 100}%`;
+        
+        // 播放/暂停
+        playBtn.addEventListener('click', function() {
+          isPlaying = !isPlaying;
+          if (isPlaying) {
+            playBtn.innerHTML = '<span class="yueji-play-icon">⏸</span>';
+            playBtn.title = '暂停';
+            simulatePlayback();
+          } else {
+            playBtn.innerHTML = '<span class="yueji-play-icon">▶</span>';
+            playBtn.title = '播放';
+          }
+        });
+        
+        // 模拟播放
+        function simulatePlayback() {
+          if (!isPlaying) return;
+          
+          if (currentTime < duration) {
+            currentTime += 1;
+            updateProgress();
+            setTimeout(simulatePlayback, 1000);
+          } else {
+            isPlaying = false;
+            playBtn.innerHTML = '<span class="yueji-play-icon">▶</span>';
+            playBtn.title = '播放';
+            currentTime = 0;
+            updateProgress();
+          }
+        }
+        
+        // 更新进度
+        function updateProgress() {
+          const progressPercent = (currentTime / duration) * 100;
+          progress.style.width = `${progressPercent}%`;
+          updateTimeDisplay();
+        }
+        
+        // 更新时间显示
+        function updateTimeDisplay() {
+          const formatTime = (seconds) => {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+          };
+          
+          currentTimeEl.textContent = formatTime(currentTime);
+          durationEl.textContent = formatTime(duration);
+        }
+        
+        // 进度条点击
+        progressBar.addEventListener('click', function(e) {
+          const progressWidth = this.clientWidth;
+          const clickedOffsetX = e.offsetX;
+          const progressPercent = (clickedOffsetX / progressWidth) * 100;
+          progress.style.width = `${progressPercent}%`;
+          currentTime = (progressPercent / 100) * duration;
+          updateTimeDisplay();
+        });
+        
+        // 音量控制
+        volumeBar.addEventListener('click', function(e) {
+          const volumeWidth = this.clientWidth;
+          const clickedOffsetX = e.offsetX;
+          const volumePercent = (clickedOffsetX / volumeWidth);
+          currentVolume = Math.max(0, Math.min(1, volumePercent));
+          volumeInner.style.width = `${currentVolume * 100}%`;
+        });
+        
+        // 播放列表点击
+        playlistItems.forEach(item => {
+          item.addEventListener('click', function() {
+            playlistItems.forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
             
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
+            const songName = this.querySelector('.yueji-playlist-name').textContent;
+            document.querySelector('.yueji-title').textContent = songName;
+            
+            // 重置播放状态
+            isPlaying = false;
+            playBtn.innerHTML = '<span class="yueji-play-icon">▶</span>';
+            playBtn.title = '播放';
+            currentTime = 0;
+            updateProgress();
+          });
+        });
+      });
+    </script>
+  </div>
   
-  
+  <!-- 保留您原有的其他内容 -->
+  <p>富士山下</p>
+  <iframe src="http://music.163.com/song/media/outer/url?id=2599695445.mp3" name="富士山下" scrolling="auto" width="100%" height="100%" style="border: none #b0b0b0;"></iframe>
 </div>
 
 
