@@ -331,6 +331,10 @@
 
 
 
+  
+<script src="/js/fireworks.js"></script>
+
+
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
@@ -342,5 +346,106 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
+  <!-- 烟花效果（无需<head>标签，直接放底部） -->
+<canvas id="fireworksCanvas" style="position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; z-index: -9999 !important; pointer-events: none !important; background: transparent !important; display: block !important;"></canvas>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const canvas = document.getElementById('fireworksCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.size = Math.random() * 2 + 1;
+      this.vx = (Math.random() - 0.5) * 5;
+      this.vy = (Math.random() - 0.5) * 5;
+      this.color = `rgb(${Math.random()*200+55|0}, ${Math.random()*200+55|0}, ${Math.random()*200+55|0})`;
+      this.life = 30;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.size *= 0.92;
+      this.life--;
+    }
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  let particles = [];
+
+  window.addEventListener('mousemove', (e) => {
+    for (let i = 0; i < 2; i++) {
+      particles.push(new Particle(e.clientX, e.clientY));
+    }
+  });
+
+  function animate() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.01)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p, i) => {
+      p.update();
+      p.draw();
+      if (p.life <= 0) particles.splice(i, 1);
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+});
+</script>
 </body>
+<canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
+<script>
+const c=document.getElementById("fireworks");
+const ctx=c.getContext("2d");
+c.width=window.innerWidth;
+c.height=window.innerHeight;
+window.onresize=()=>{c.width=window.innerWidth;c.height=window.innerHeight;};
+class Particle{
+  constructor(x,y){
+    this.x=x;this.y=y;this.size=Math.random()*3+1;
+    this.vx=(Math.random()-0.5)*6;this.vy=(Math.random()-0.5)*6;
+    this.color=`rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
+    this.life=30;
+  }
+  update(){
+    this.x+=this.vx;this.y+=this.vy;this.size*=0.95;this.life--;
+  }
+  draw(){
+    ctx.fillStyle=this.color;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+let particles=[];
+document.onmousemove=(e)=>{
+  for(let i=0;i<3;i++)particles.push(new Particle(e.clientX,e.clientY));
+};
+function animate(){
+  ctx.fillStyle="rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,c.width,c.height);
+  for(let i=particles.length-1;i>=0;i--){
+    particles[i].update();
+    particles[i].draw();
+    if(particles[i].life<=0)particles.splice(i,1);
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</script>
+</script>
 </html>
