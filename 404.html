@@ -335,94 +335,189 @@
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
 
-  <!-- 烟花特效（仅1份，无重复） -->
-  <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
-  <script>
-    const c=document.getElementById("fireworks");
-    const ctx=c.getContext("2d");
-    c.width=window.innerWidth;
-    c.height=window.innerHeight;
-    window.onresize=()=>{c.width=window.innerWidth;c.height=window.innerHeight;};
-    class Particle{
-      constructor(x,y){
-        this.x=x;this.y=y;this.size=Math.random()*3+1;
-        this.vx=(Math.random()-0.5)*6;this.vy=(Math.random()-0.5)*6;
-        this.color=`rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
-        this.life=30;
-      }
-      update(){
-        this.x+=this.vx;this.y+=this.vy;this.size*=0.95;this.life--;
-      }
-      draw(){
-        ctx.fillStyle=this.color;
-        ctx.beginPath();
-        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-        ctx.fill();
-      }
+ <!-- 放在 _layout.ejs 的 </body> 前面 -->
+
+<!-- 1. 烟花背景特效 -->
+<canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
+<script>
+const c = document.getElementById("fireworks");
+const ctx = c.getContext("2d");
+function resizeCanvas() {
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random() * 3 + 1;
+    this.vx = (Math.random() - 0.5) * 6;
+    this.vy = (Math.random() - 0.5) * 6;
+    this.color = `rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
+    this.life = 30;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.size *= 0.95;
+    this.life--;
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+let particles = [];
+document.addEventListener('mousemove', (e) => {
+  for (let i = 0; i < 3; i++) {
+    particles.push(new Particle(e.clientX, e.clientY));
+  }
+});
+
+function animateFireworks() {
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0, 0, c.width, c.height);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].draw();
+    if (particles[i].life <= 0) {
+      particles.splice(i, 1);
     }
-    let particles=[];
-    document.onmousemove=(e)=>{
-      for(let i=0;i<3;i++)particles.push(new Particle(e.clientX,e.clientY));
-    };
-    function animate(){
-      ctx.fillStyle="rgba(0,0,0,0.05)";
-      ctx.fillRect(0,0,c.width,c.height);
-      for(let i=particles.length-1;i>=0;i--){
-        particles[i].update();
-        particles[i].draw();
-        if(particles[i].life<=0)particles.splice(i,1);
+  }
+  requestAnimationFrame(animateFireworks);
+}
+animateFireworks();
+</script>
+
+<!-- 2. 博文标题点击炸开特效（修复返回后文字消失问题） -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const postTitles = document.querySelectorAll('.index-header a');
+  
+  // 修复：页面显示时强制恢复所有标题的透明度
+  postTitles.forEach(title => {
+    title.style.opacity = 1; // 强制显示
+  });
+  
+  postTitles.forEach(title => {
+    title.addEventListener('click', function(e) {
+      const titleText = this.textContent.trim();
+      if (!titleText) return;
+      
+      e.preventDefault();
+      const targetUrl = this.href;
+      const rect = this.getBoundingClientRect();
+      
+      // 临时隐藏当前点击的标题
+      this.style.opacity = 0;
+      
+      // 生成粒子
+      for (let i = 0; i < titleText.length; i++) {
+        for (let j = 0; j < 6; j++) {
+          const particle = document.createElement('span');
+          particle.textContent = titleText[i];
+          particle.style.cssText = `
+            position: fixed;
+            left: ${rect.left + i * 14 + Math.random() * 8}px;
+            top: ${rect.top + Math.random() * 10 - 5}px;
+            color: rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0});
+            font-size: ${14 + Math.random() * 6}px;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 9999;
+            transform: rotate(${Math.random() * 30 - 15}deg);
+            transition: all 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+          `;
+          document.body.appendChild(particle);
+          
+          setTimeout(() => {
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 30 + Math.random() * 40;
+            particle.style.transform = `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px) rotate(${Math.random()*60-30}deg)`;
+            particle.style.opacity = 0;
+          }, 30);
+          
+          setTimeout(() => particle.remove(), 500);
+        }
       }
-      requestAnimationFrame(animate);
-    }
-    animate();
-  </script>
+      
+      // 跳转前恢复标题显示（防止返回时残留隐藏状态）
+      setTimeout(() => {
+        this.style.opacity = 1; // 关键修复：跳转前恢复透明度
+        window.location.href = targetUrl;
+      }, 300);
+    });
+  });
 
-  <style>
-  /* 1. 博客名称：默认白色，hover彩虹滚动 */
-  .navbar-brand strong {
-    color: #fff !important; /* 默认白色，不透明 */
-    transition: all 0.3s ease !important;
-    font-weight: bold !important;
-  }
-  .navbar-brand:hover strong {
-    background: linear-gradient(90deg, #ff0000, #ff9900, #ffff00, #33cc33, #3366ff, #9933ff, #ff33cc) !important;
-    background-size: 300% 100% !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    color: transparent !important; /* hover时文字透明，显示渐变 */
-    animation: rainbow 2s linear infinite !important;
-  }
+  // 额外保险：监听浏览器历史记录变化（返回/前进时）
+  window.addEventListener('popstate', function() {
+    postTitles.forEach(title => {
+      title.style.opacity = 1; // 强制所有标题显示
+    });
+  });
+});
+</script>
 
-  /* 2. 菜单文字（首页、归档等）：默认白色，hover彩虹滚动 */
-  .nav-link span {
-    color: #fff !important; /* 默认白色，不透明 */
-    transition: all 0.3s ease !important;
-  }
-  .nav-link:hover span {
-    background: linear-gradient(90deg, #ff0000, #ff9900, #ffff00, #33cc33, #3366ff, #9933ff, #ff33cc) !important;
-    background-size: 300% 100% !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    color: transparent !important; /* hover时文字透明，显示渐变 */
-    animation: rainbow 2s linear infinite !important;
-  }
+<!-- 3. 导航栏样式 -->
+<style>
+.navbar-brand strong {
+  color: #fff !important;
+  font-weight: bold !important;
+  transition: all 0.3s ease !important;
+}
+.navbar-brand:hover strong {
+  background: linear-gradient(90deg, 
+    #ff0000, #ff9900, #ffff00, 
+    #33cc33, #3366ff, #9933ff, #ff33cc
+  ) !important;
+  background-size: 300% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  animation: rainbow 2s linear infinite !important;
+}
 
-  /* 彩虹滚动动画 */
-  @keyframes rainbow {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 300% 50%; }
-  }
+.nav-link span {
+  color: #fff !important;
+  transition: all 0.3s ease !important;
+}
+.nav-link:hover span {
+  background: linear-gradient(90deg, 
+    #ff0000, #ff9900, #ffff00, 
+    #33cc33, #3366ff, #9933ff, #ff33cc
+  ) !important;
+  background-size: 300% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  animation: rainbow 2s linear infinite !important;
+}
 
-  /* 取消所有干扰样式，确保默认白色纯净 */
-  .navbar-brand,
-  .nav-link {
-    background: none !important;
-    color: #fff !important;
-  }
-  .navbar-brand:focus strong,
-  .nav-link:focus span {
-    color: #fff !important;
-  }
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+.navbar-brand, .nav-link {
+  background: none !important;
+  color: #fff !important;
+}
+.navbar-brand:focus strong,
+.nav-link:focus span {
+  color: #fff !important;
+  outline: none !important;
+}
+
+.index-header a {
+  display: inline-block !important;
+  transition: opacity 0.3s ease !important;
+}
 </style>
 </body>
 
