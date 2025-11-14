@@ -675,124 +675,96 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
-  <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
-<script>
-const c=document.getElementById("fireworks");
-const ctx=c.getContext("2d");
-c.width=window.innerWidth;
-c.height=window.innerHeight;
-window.onresize=()=>{c.width=window.innerWidth;c.height=window.innerHeight;};
-class Particle{
-  constructor(x,y){
-    this.x=x;this.y=y;this.size=Math.random()*3+1;
-    this.vx=(Math.random()-0.5)*6;this.vy=(Math.random()-0.5)*6;
-    this.color=`rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
-    this.life=30;
-  }
-  update(){
-    this.x+=this.vx;this.y+=this.vy;this.size*=0.95;this.life--;
-  }
-  draw(){
-    ctx.fillStyle=this.color;
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fill();
-  }
-}
-let particles=[];
-document.onmousemove=(e)=>{
-  for(let i=0;i<3;i++)particles.push(new Particle(e.clientX,e.clientY));
-};
-function animate(){
-  ctx.fillStyle="rgba(0,0,0,0.05)";
-  ctx.fillRect(0,0,c.width,c.height);
-  for(let i=particles.length-1;i>=0;i--){
-    particles[i].update();
-    particles[i].draw();
-    if(particles[i].life<=0)particles.splice(i,1);
-  }
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
-<!-- 保留烟花效果（不变） -->
-<canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
-<script>
-const c=document.getElementById("fireworks");
-const ctx=c.getContext("2d");
-c.width=window.innerWidth;
-c.height=window.innerHeight;
-window.onresize=()=>{c.width=window.innerWidth;c.height=window.innerHeight;};
-class Particle{
-  constructor(x,y){
-    this.x=x;this.y=y;this.size=Math.random()*3+1;
-    this.vx=(Math.random()-0.5)*6;this.vy=(Math.random()-0.5)*6;
-    this.color=`rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
-    this.life=30;
-  }
-  update(){
-    this.x+=this.vx;this.y+=this.vy;this.size*=0.95;this.life--;
-  }
-  draw(){
-    ctx.fillStyle=this.color;
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fill();
-  }
-}
-let particles=[];
-document.onmousemove=(e)=>{
-  for(let i=0;i<3;i++)particles.push(new Particle(e.clientX,e.clientY));
-};
-function animate(){
-  ctx.fillStyle="rgba(0,0,0,0.05)";
-  ctx.fillRect(0,0,c.width,c.height);
-  for(let i=particles.length-1;i>=0;i--){
-    particles[i].update();
-    particles[i].draw();
-    if(particles[i].life<=0)particles.splice(i,1);
-  }
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
 
-<!-- 只保留导航栏文字特效（彩虹悬浮） -->
-<style>
-  /* 导航栏文字彩虹悬浮特效 */
-  .navbar-brand {
+  <!-- 烟花特效（仅1份，无重复） -->
+  <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
+  <script>
+    const c=document.getElementById("fireworks");
+    const ctx=c.getContext("2d");
+    c.width=window.innerWidth;
+    c.height=window.innerHeight;
+    window.onresize=()=>{c.width=window.innerWidth;c.height=window.innerHeight;};
+    class Particle{
+      constructor(x,y){
+        this.x=x;this.y=y;this.size=Math.random()*3+1;
+        this.vx=(Math.random()-0.5)*6;this.vy=(Math.random()-0.5)*6;
+        this.color=`rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
+        this.life=30;
+      }
+      update(){
+        this.x+=this.vx;this.y+=this.vy;this.size*=0.95;this.life--;
+      }
+      draw(){
+        ctx.fillStyle=this.color;
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+        ctx.fill();
+      }
+    }
+    let particles=[];
+    document.onmousemove=(e)=>{
+      for(let i=0;i<3;i++)particles.push(new Particle(e.clientX,e.clientY));
+    };
+    function animate(){
+      ctx.fillStyle="rgba(0,0,0,0.05)";
+      ctx.fillRect(0,0,c.width,c.height);
+      for(let i=particles.length-1;i>=0;i--){
+        particles[i].update();
+        particles[i].draw();
+        if(particles[i].life<=0)particles.splice(i,1);
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+
+  <style>
+  /* 1. 博客名称：默认白色，hover彩虹滚动 */
+  .navbar-brand strong {
+    color: #fff !important; /* 默认白色，不透明 */
+    transition: all 0.3s ease !important;
+    font-weight: bold !important;
+  }
+  .navbar-brand:hover strong {
     background: linear-gradient(90deg, #ff0000, #ff9900, #ffff00, #33cc33, #3366ff, #9933ff, #ff33cc) !important;
     background-size: 300% 100% !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
-    color: transparent !important;
-    position: relative !important;
-    transition: all 0.3s ease !important;
-  }
-  .navbar-brand::before {
-    content: attr(data-text) !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    color: #fff !important; /* 导航栏默认白色文字 */
-    font-weight: bold !important;
-    transition: opacity 0.3s ease !important;
-  }
-  .navbar-brand:hover::before {
-    opacity: 0 !important; /* 悬浮隐藏白色文字 */
-  }
-  .navbar-brand:hover {
-    animation: rainbow 2s linear infinite !important; /* 显示彩虹滚动 */
+    color: transparent !important; /* hover时文字透明，显示渐变 */
+    animation: rainbow 2s linear infinite !important;
   }
 
-  /* 彩虹动画 */
+  /* 2. 菜单文字（首页、归档等）：默认白色，hover彩虹滚动 */
+  .nav-link span {
+    color: #fff !important; /* 默认白色，不透明 */
+    transition: all 0.3s ease !important;
+  }
+  .nav-link:hover span {
+    background: linear-gradient(90deg, #ff0000, #ff9900, #ffff00, #33cc33, #3366ff, #9933ff, #ff33cc) !important;
+    background-size: 300% 100% !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important; /* hover时文字透明，显示渐变 */
+    animation: rainbow 2s linear infinite !important;
+  }
+
+  /* 彩虹滚动动画 */
   @keyframes rainbow {
     0% { background-position: 0% 50%; }
     100% { background-position: 300% 50%; }
   }
+
+  /* 取消所有干扰样式，确保默认白色纯净 */
+  .navbar-brand,
+  .nav-link {
+    background: none !important;
+    color: #fff !important;
+  }
+  .navbar-brand:focus strong,
+  .nav-link:focus span {
+    color: #fff !important;
+  }
 </style>
 </body>
 
-</script>
-</script>
 </html>
