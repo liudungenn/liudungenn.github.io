@@ -789,7 +789,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const contentContainer = document.querySelector('.post-content');
   if (!contentContainer) return;
 
-  // 创建网格canvas
+  // 关键：创建专门的背景容器，用于放置canvas
+  const bgContainer = document.createElement('div');
+  bgContainer.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  `;
+  // 给内容容器设置相对定位，作为背景容器的定位参考
+  contentContainer.style.position = 'relative';
+  // 把原有内容临时存起来
+  const originalContent = contentContainer.innerHTML;
+  // 清空内容容器，先放背景容器，再放回原有内容
+  contentContainer.innerHTML = '';
+  contentContainer.appendChild(bgContainer);
+  // 重新插入原有内容（会在背景容器上层）
+  contentContainer.insertAdjacentHTML('beforeend', originalContent);
+
+  // 创建网格canvas，插入到背景容器中
   const canvas = document.createElement('canvas');
   canvas.id = 'gridCanvas';
   canvas.style.cssText = `
@@ -798,9 +818,9 @@ document.addEventListener('DOMContentLoaded', () => {
     left:0;
     z-index:0;
     background:transparent;
-    pointer-events:none; /* 不影响文字点击 */
+    pointer-events:none;
   `;
-  contentContainer.appendChild(canvas);
+  bgContainer.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
   let width, height;
