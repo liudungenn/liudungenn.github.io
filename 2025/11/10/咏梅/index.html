@@ -628,7 +628,7 @@
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
 
- <!-- 放在 _layout.ejs 的 </body> 前面 -->
+<!-- 放在 _layout.ejs 的 </body> 前面 -->
 
 <!-- 1. 烟花背景特效 -->
 <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
@@ -687,15 +687,314 @@ function animateFireworks() {
 }
 animateFireworks();
 </script>
+<!-- 放在 _layout.ejs 的 </body> 前面 -->
 
-<!-- 2. 博文标题点击炸开特效（修复返回后文字消失问题） -->
+<!-- 1. 烟花背景特效 -->
+<canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
+<script>
+const c = document.getElementById("fireworks");
+const ctx = c.getContext("2d");
+function resizeCanvas() {
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random() * 3 + 1;
+    this.vx = (Math.random() - 0.5) * 6;
+    this.vy = (Math.random() - 0.5) * 6;
+    this.color = `rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
+    this.life = 30;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.size *= 0.95;
+    this.life--;
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+let particles = [];
+document.addEventListener('mousemove', (e) => {
+  for (let i = 0; i < 3; i++) {
+    particles.push(new Particle(e.clientX, e.clientY));
+  }
+});
+
+function animateFireworks() {
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0, 0, c.width, c.height);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].draw();
+    if (particles[i].life <= 0) {
+      particles.splice(i, 1);
+    }
+  }
+  requestAnimationFrame(animateFireworks);
+}
+animateFireworks();
+</script>
+<!-- 放在 _layout.ejs 的 </body> 前面 -->
+
+<!-- 1. 原有鼠标烟花背景特效（保留不变） -->
+<canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
+<script>
+const c = document.getElementById("fireworks");
+const ctx = c.getContext("2d");
+function resizeCanvas() {
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random() * 3 + 1;
+    this.vx = (Math.random() - 0.5) * 6;
+    this.vy = (Math.random() - 0.5) * 6;
+    this.color = `rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
+    this.life = 30;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.size *= 0.95;
+    this.life--;
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+let particles = [];
+document.addEventListener('mousemove', (e) => {
+  for (let i = 0; i < 3; i++) {
+    particles.push(new Particle(e.clientX, e.clientY));
+  }
+});
+
+function animateFireworks() {
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0, 0, c.width, c.height);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].draw();
+    if (particles[i].life <= 0) {
+      particles.splice(i, 1);
+    }
+  }
+  requestAnimationFrame(animateFireworks);
+}
+animateFireworks();
+</script>
+
+<!-- 放在 _layout.ejs 的 </body> 前面 -->
+
+<!-- 1. 原有鼠标烟花背景特效（保留不变） -->
+<canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
+<script>
+const c = document.getElementById("fireworks");
+const ctx = c.getContext("2d");
+function resizeCanvas() {
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random() * 3 + 1;
+    this.vx = (Math.random() - 0.5) * 6;
+    this.vy = (Math.random() - 0.5) * 6;
+    this.color = `rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
+    this.life = 30;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.size *= 0.95;
+    this.life--;
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+let particles = [];
+document.addEventListener('mousemove', (e) => {
+  for (let i = 0; i < 3; i++) {
+    particles.push(new Particle(e.clientX, e.clientY));
+  }
+});
+
+function animateFireworks() {
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0, 0, c.width, c.height);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].draw();
+    if (particles[i].life <= 0) {
+      particles.splice(i, 1);
+    }
+  }
+  requestAnimationFrame(animateFireworks);
+}
+animateFireworks();
+</script>
+
+<!-- 2. banner 背景（图片/视频双模式，可快速切换）+ hover 烟花特效 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // ========== 核心切换开关：改这里就能换图片/视频 ==========
+  const useVideoBanner = true; // true=用视频，false=用图片
+  // ======================================================
+  
+  const banner = document.getElementById('banner');
+  if (!banner) return;
+  
+  // 模式1：使用视频背景
+  if (useVideoBanner) {
+    banner.style.background = 'none';
+    const video = document.createElement('video');
+    video.src = '/video/banner-video.mp4'; // 视频路径
+    video.autoplay = true;
+    video.loop = true;
+    video.muted = true;
+    video.playbackRate = 0.8;
+    video.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    `;
+    banner.appendChild(video);
+    // 视频加载失败降级为图片
+    video.addEventListener('error', () => {
+      setImageBanner();
+    });
+  } 
+  // 模式2：使用图片背景（原来的方式）
+  else {
+    setImageBanner();
+  }
+
+  // 图片背景设置函数（复用逻辑）
+  function setImageBanner() {
+    banner.style.background = 'url(/img/default.png) no-repeat center center';
+    banner.style.backgroundSize = 'cover';
+  }
+
+  // banner 鼠标 hover 烟花特效（保留不变）
+  const canvas = document.createElement('canvas');
+  canvas.id = 'banner-fireworks';
+  canvas.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;background:transparent;";
+  banner.appendChild(canvas);
+  
+  function resizeBannerCanvas() {
+    const rect = banner.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    canvas.style.top = `${rect.top}px`;
+    canvas.style.left = `${rect.left}px`;
+  }
+  resizeBannerCanvas();
+  window.addEventListener('resize', resizeBannerCanvas);
+  
+  const ctx2 = canvas.getContext("2d");
+  let bannerParticles = [];
+  let isHoverBanner = false;
+  let hoverX = 0, hoverY = 0;
+  
+  banner.addEventListener('mouseenter', () => isHoverBanner = true);
+  banner.addEventListener('mouseleave', () => isHoverBanner = false);
+  banner.addEventListener('mousemove', (e) => {
+    const rect = banner.getBoundingClientRect();
+    hoverX = e.clientX - rect.left;
+    hoverY = e.clientY - rect.top;
+  });
+  
+  function createBannerParticle() {
+    if (!isHoverBanner) return;
+    const centerX = hoverX;
+    const centerY = hoverY;
+    for (let i = 0; i < 8; i++) {
+      const angle = (i / 8) * Math.PI * 2;
+      const distance = Math.random() * 15 + 5;
+      bannerParticles.push({
+        x: centerX + Math.cos(angle) * distance,
+        y: centerY + Math.sin(angle) * distance,
+        size: Math.random() * 3 + 2,
+        vx: Math.cos(angle) * (Math.random() * 2 + 1),
+        vy: Math.sin(angle) * (Math.random() * 2 + 1),
+        color: `rgb(${Math.floor(Math.random()*220+35)},${Math.floor(Math.random()*220+35)},${Math.floor(Math.random()*220+35)})`,
+        life: Math.random() * 30 + 20
+      });
+    }
+  }
+  
+  setInterval(createBannerParticle, 100);
+  
+  function animateBannerFireworks() {
+    ctx2.clearRect(0, 0, canvas.width, canvas.height);
+    if (isHoverBanner) {
+      ctx2.fillStyle = "rgba(0,0,0,0.1)";
+      ctx2.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    for (let i = bannerParticles.length - 1; i >= 0; i--) {
+      const p = bannerParticles[i];
+      ctx2.fillStyle = p.color;
+      ctx2.beginPath();
+      ctx2.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx2.fill();
+      
+      p.x += p.vx;
+      p.y += p.vy;
+      p.size *= 0.97;
+      p.life--;
+      
+      if (p.life <= 0) bannerParticles.splice(i, 1);
+    }
+    requestAnimationFrame(animateBannerFireworks);
+  }
+  animateBannerFireworks();
+});
+</script>
+
+<!-- 3. 博文标题点击炸开特效（保留不变） -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const postTitles = document.querySelectorAll('.index-header a');
   
-  // 修复：页面显示时强制恢复所有标题的透明度
   postTitles.forEach(title => {
-    title.style.opacity = 1; // 强制显示
+    title.style.opacity = 1;
   });
   
   postTitles.forEach(title => {
@@ -707,10 +1006,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const targetUrl = this.href;
       const rect = this.getBoundingClientRect();
       
-      // 临时隐藏当前点击的标题
       this.style.opacity = 0;
       
-      // 生成粒子
       for (let i = 0; i < titleText.length; i++) {
         for (let j = 0; j < 6; j++) {
           const particle = document.createElement('span');
@@ -740,24 +1037,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       
-      // 跳转前恢复标题显示（防止返回时残留隐藏状态）
       setTimeout(() => {
-        this.style.opacity = 1; // 关键修复：跳转前恢复透明度
+        this.style.opacity = 1;
         window.location.href = targetUrl;
       }, 300);
     });
   });
 
-  // 额外保险：监听浏览器历史记录变化（返回/前进时）
   window.addEventListener('popstate', function() {
     postTitles.forEach(title => {
-      title.style.opacity = 1; // 强制所有标题显示
+      title.style.opacity = 1;
     });
   });
 });
 </script>
 
-<!-- 3. 导航栏样式 -->
+<!-- 4. 导航栏 + banner 文字样式（保留不变） -->
 <style>
 .navbar-brand strong {
   color: #fff !important;
@@ -810,6 +1105,15 @@ document.addEventListener('DOMContentLoaded', function() {
 .index-header a {
   display: inline-block !important;
   transition: opacity 0.3s ease !important;
+}
+
+.banner .mask {
+  background-color: rgba(0,0,0,0.4) !important;
+}
+.banner-text span {
+  color: #fff !important;
+  font-weight: bold !important;
+  text-shadow: 0 0 8px rgba(0,0,0,0.8) !important;
 }
 </style>
 </body>
