@@ -678,7 +678,7 @@
 
 <!-- 放在 _layout.ejs 的 </body> 前面 -->
 
-<!-- 1. 烟花背景特效 -->
+<!-- 1. 烟花背景特效（保留） -->
 <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
 <script>
 const c = document.getElementById("fireworks");
@@ -736,172 +736,33 @@ function animateFireworks() {
 animateFireworks();
 </script>
 
-<!-- 放在 _layout.ejs 的 </body> 前面 -->
-
-<!-- 1. 原有鼠标烟花背景特效（保留不变） -->
-<canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
-<script>
-const c = document.getElementById("fireworks");
-const ctx = c.getContext("2d");
-function resizeCanvas() {
-  c.width = window.innerWidth;
-  c.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-class Particle {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.size = Math.random() * 3 + 1;
-    this.vx = (Math.random() - 0.5) * 6;
-    this.vy = (Math.random() - 0.5) * 6;
-    this.color = `rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
-    this.life = 30;
-  }
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.size *= 0.95;
-    this.life--;
-  }
-  draw() {
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-let particles = [];
-document.addEventListener('mousemove', (e) => {
-  for (let i = 0; i < 3; i++) {
-    particles.push(new Particle(e.clientX, e.clientY));
-  }
-});
-
-function animateFireworks() {
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
-  ctx.fillRect(0, 0, c.width, c.height);
-  for (let i = particles.length - 1; i >= 0; i--) {
-    particles[i].update();
-    particles[i].draw();
-    if (particles[i].life <= 0) {
-      particles.splice(i, 1);
-    }
-  }
-  requestAnimationFrame(animateFireworks);
-}
-animateFireworks();
-</script>
-
-<!-- 放在 _layout.ejs 的 </body> 前面 -->
-
-<!-- 1. 原有鼠标烟花背景特效（保留不变） -->
-<canvas id="fireworks" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:transparent;"></canvas>
-<script>
-const c = document.getElementById("fireworks");
-const ctx = c.getContext("2d");
-function resizeCanvas() {
-  c.width = window.innerWidth;
-  c.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-class Particle {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.size = Math.random() * 3 + 1;
-    this.vx = (Math.random() - 0.5) * 6;
-    this.vy = (Math.random() - 0.5) * 6;
-    this.color = `rgb(${Math.random()*255|0},${Math.random()*255|0},${Math.random()*255|0})`;
-    this.life = 30;
-  }
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.size *= 0.95;
-    this.life--;
-  }
-  draw() {
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-let particles = [];
-document.addEventListener('mousemove', (e) => {
-  for (let i = 0; i < 3; i++) {
-    particles.push(new Particle(e.clientX, e.clientY));
-  }
-});
-
-function animateFireworks() {
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
-  ctx.fillRect(0, 0, c.width, c.height);
-  for (let i = particles.length - 1; i >= 0; i--) {
-    particles[i].update();
-    particles[i].draw();
-    if (particles[i].life <= 0) {
-      particles.splice(i, 1);
-    }
-  }
-  requestAnimationFrame(animateFireworks);
-}
-animateFireworks();
-</script>
-
-<!-- 2. banner 背景（图片/视频双模式，可快速切换）+ hover 烟花特效 -->
+<!-- 2. banner 背景（图片/视频双模式）+ hover 烟花特效（保留） -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // ========== 核心切换开关：改这里就能换图片/视频 ==========
-  const useVideoBanner = true; // true=用视频，false=用图片
-  // ======================================================
-  
+  const useVideoBanner = true; // true=视频，false=图片
   const banner = document.getElementById('banner');
   if (!banner) return;
   
-  // 模式1：使用视频背景
   if (useVideoBanner) {
     banner.style.background = 'none';
     const video = document.createElement('video');
-    video.src = '/video/banner-video.mp4'; // 视频路径
+    video.src = '/video/banner-video.mp4';
     video.autoplay = true;
     video.loop = true;
     video.muted = true;
     video.playbackRate = 0.8;
-    video.style.cssText = `
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    `;
+    video.style.cssText = `position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;`;
     banner.appendChild(video);
-    // 视频加载失败降级为图片
     video.addEventListener('error', () => {
-      setImageBanner();
+      banner.style.background = 'url(/img/default.png) no-repeat center center';
+      banner.style.backgroundSize = 'cover';
     });
-  } 
-  // 模式2：使用图片背景（原来的方式）
-  else {
-    setImageBanner();
-  }
-
-  // 图片背景设置函数（复用逻辑）
-  function setImageBanner() {
+  } else {
     banner.style.background = 'url(/img/default.png) no-repeat center center';
     banner.style.backgroundSize = 'cover';
   }
 
-  // banner 鼠标 hover 烟花特效（保留不变）
+  // banner hover 烟花
   const canvas = document.createElement('canvas');
   canvas.id = 'banner-fireworks';
   canvas.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;background:transparent;";
@@ -977,14 +838,15 @@ document.addEventListener('DOMContentLoaded', function() {
   animateBannerFireworks();
 });
 </script>
-<!-- 3. 博文内容区域 动态网格特效（核心修改：只在博文内显示） -->
+
+<!-- 3. 博文内容区域 静态浅灰色网格（无跳舞效果，仅博文页显示） -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // 只在博文页面（post）或文章详情页生效
-  if (!document.querySelector('.post-content') && !document.querySelector('.index-info')) return;
-  
-  // 创建网格canvas，插入到博文内容区域
-  const contentContainer = document.querySelector('.post-content') || document.querySelector('#board .container');
+  // 仅在博文页面显示（首页不显示）
+  const contentContainer = document.querySelector('.post-content');
+  if (!contentContainer) return;
+
+  // 创建网格canvas
   const canvas = document.createElement('canvas');
   canvas.id = 'gridCanvas';
   canvas.style.cssText = `
@@ -992,129 +854,74 @@ document.addEventListener('DOMContentLoaded', () => {
     top:0;
     left:0;
     z-index:0;
-    background:transparent; /* 透明背景，不遮挡博文内容 */
+    background:transparent;
+    pointer-events:none; /* 不影响文字点击 */
   `;
   contentContainer.appendChild(canvas);
   const ctx = canvas.getContext('2d');
-  
+
   let width, height;
   const gap = 30; // 网格间距
-  let mouse = { x: null, y: null, radius: 150 };
-  let containerRect; // 博文区域位置信息
 
-  // 初始化画布尺寸（跟随博文区域大小）
+  // 初始化尺寸
   function resizeCanvas() {
-    containerRect = contentContainer.getBoundingClientRect();
-    // 相对于父容器定位，获取父容器的偏移
+    const containerRect = contentContainer.getBoundingClientRect();
     const parentStyle = window.getComputedStyle(contentContainer);
     const parentPaddingTop = parseInt(parentStyle.paddingTop) || 0;
     const parentPaddingLeft = parseInt(parentStyle.paddingLeft) || 0;
-    
+
     width = containerRect.width - parentPaddingLeft * 2;
     height = containerRect.height - parentPaddingTop * 2;
     canvas.width = width;
     canvas.height = height;
     canvas.style.top = `${parentPaddingTop}px`;
     canvas.style.left = `${parentPaddingLeft}px`;
-  }
-  
-  // 确保博文内容加载完成后再初始化
-  setTimeout(resizeCanvas, 100);
-  window.addEventListener('resize', resizeCanvas);
 
-  // 绘制网格（优化颜色，不遮挡文字）
+    drawGrid(); // 尺寸变化时重绘
+  }
+
+  // 绘制静态网格（无互动变形）
   function drawGrid() {
     ctx.clearRect(0, 0, width, height);
-    
-    // 浅粉色网格，透明度降低，避免干扰阅读
-    ctx.strokeStyle = 'rgba(255, 183, 200, 0.2)';
+    ctx.strokeStyle = 'rgba(200, 200, 200, 0.3)'; // 浅灰色网格
     ctx.lineWidth = 1;
 
-    // 横线
+    // 横线（固定不变）
     for (let y = 0; y < height; y += gap) {
       ctx.beginPath();
-      let offsetY = 0;
-      if (mouse.x !== null && mouse.y !== null) {
-        // 转换鼠标坐标到网格canvas内
-        const relativeX = mouse.x - containerRect.left;
-        const relativeY = mouse.y - containerRect.top;
-        const dist = Math.abs(relativeY - y);
-        if (dist < mouse.radius && relativeX >= 0 && relativeX <= width) {
-          const ratio = 1 - (dist / mouse.radius);
-          offsetY = Math.sin(ratio * Math.PI) * 15 * (relativeX < width/2 ? -1 : 1);
-        }
-      }
       ctx.moveTo(0, y);
-      for (let x = 0; x < width; x += gap) {
-        const x2 = x + gap;
-        const y2 = y + offsetY * Math.sin(x / width * Math.PI);
-        ctx.lineTo(x2, y2);
-      }
+      ctx.lineTo(width, y);
       ctx.stroke();
     }
 
-    // 竖线
+    // 竖线（固定不变）
     for (let x = 0; x < width; x += gap) {
       ctx.beginPath();
-      let offsetX = 0;
-      if (mouse.x !== null && mouse.y !== null) {
-        const relativeX = mouse.x - containerRect.left;
-        const relativeY = mouse.y - containerRect.top;
-        const dist = Math.abs(relativeX - x);
-        if (dist < mouse.radius && relativeY >= 0 && relativeY <= height) {
-          const ratio = 1 - (dist / mouse.radius);
-          offsetX = Math.sin(ratio * Math.PI) * 15 * (relativeY < height/2 ? -1 : 1);
-        }
-      }
       ctx.moveTo(x, 0);
-      for (let y = 0; y < height; y += gap) {
-        const y2 = y + gap;
-        const x2 = x + offsetX * Math.sin(y / height * Math.PI);
-        ctx.lineTo(x2, y2);
-      }
+      ctx.lineTo(x, height);
       ctx.stroke();
     }
   }
 
-  // 动画循环
-  function animate() {
-    drawGrid();
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  // 鼠标移动监听（只在博文区域内才触发）
-  window.addEventListener('mousemove', (e) => {
-    if (!containerRect) return;
-    // 判断鼠标是否在博文区域内
-    if (
-      e.x >= containerRect.left && 
-      e.x <= containerRect.right && 
-      e.y >= containerRect.top && 
-      e.y <= containerRect.bottom
-    ) {
-      mouse.x = e.x;
-      mouse.y = e.y;
-    } else {
-      mouse.x = null;
-      mouse.y = null; // 鼠标离开博文区域，网格恢复原状
-    }
-  });
+  // 初始化
+  setTimeout(resizeCanvas, 100);
+  window.addEventListener('resize', resizeCanvas);
 });
 </script>
-<!-- 3. 博文标题点击炸开特效（保留不变） -->
+
+<!-- 4. 博文标题点击炸开特效（保留） -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const postTitles = document.querySelectorAll('.index-header a');
+  // 匹配 Fluid 主题博文标题
+  const postTitles = document.querySelectorAll('.post-item .post-title a, .post-header .post-title a');
+  
+  if (postTitles.length === 0) return;
   
   postTitles.forEach(title => {
     title.style.opacity = 1;
-  });
-  
-  postTitles.forEach(title => {
     title.addEventListener('click', function(e) {
       const titleText = this.textContent.trim();
-      if (!titleText) return;
+      if (!titleText || !this.href) return;
       
       e.preventDefault();
       const targetUrl = this.href;
@@ -1122,8 +929,9 @@ document.addEventListener('DOMContentLoaded', function() {
       
       this.style.opacity = 0;
       
+      // 生成文字粒子
       for (let i = 0; i < titleText.length; i++) {
-        for (let j = 0; j < 6; j++) {
+        for (let j = 0; j < 3; j++) {
           const particle = document.createElement('span');
           particle.textContent = titleText[i];
           particle.style.cssText = `
@@ -1151,6 +959,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       
+      // 特效结束后跳转
       setTimeout(() => {
         this.style.opacity = 1;
         window.location.href = targetUrl;
@@ -1166,7 +975,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- 4. 导航栏 + banner 文字样式（保留不变） -->
+<!-- 5. 导航栏 + banner 文字样式（保留） -->
 <style>
 .navbar-brand strong {
   color: #fff !important;
