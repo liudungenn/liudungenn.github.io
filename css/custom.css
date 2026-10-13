@@ -1,0 +1,14 @@
+/* 烟花画布层级设置 */
+#fireworksCanvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: -9999 !important; /* 确保在所有内容下方 */
+  pointer-events: none !important; /* 不影响鼠标点击其他元素 */
+}
+
+/* 确保博客内容在上方 */
+.container, .content-wrap, .navbar, .board {
+  position: relative !important;
+  z-index: 1 !important;
+}
